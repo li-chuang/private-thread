@@ -15,16 +15,22 @@ import java.util.TimerTask;
 public class TraditionalTimer {
 
 	public static void main(String[] args) {
-		Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.MINUTE, 23);
+		/*Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.MINUTE, 23);		
+		executeDate(new MyTimerTask(),cal);*/
 		
-		execute(new MyTimerTask(),cal);
+		executeDelay(new MyTimerTask(),5000);
 	}
 
 	//在预定的时间点执行任务，以后可以有定时发邮件，定时保存数据库数据等。作用很广
-	public static void execute(TimerTask task,Calendar cal){
+	public static void executeDate(TimerTask task,Calendar cal){
 		new Timer().schedule(task, cal.getTime());
 	}	
+	
+	// 推迟预定的时间执行任务
+	public static void executeDelay(TimerTask task,long delay){
+		new Timer().schedule(task, delay);
+	}
 	
 }
 //任务类，自己想写多少任务都可以
@@ -32,6 +38,7 @@ class MyTimerTask extends TimerTask{
 	@Override
 	public void run() {
 		System.out.println(Calendar.getInstance().getTime());
-		System.out.println("hello ");
+		System.out.println("Booming! ");
 	}
 }
+
