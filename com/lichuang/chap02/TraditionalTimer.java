@@ -1,8 +1,15 @@
 package com.lichuang.chap02;
 
+import java.io.File;
 import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.SourceDataLine;
 
 
 /**
@@ -38,7 +45,41 @@ class MyTimerTask extends TimerTask{
 	@Override
 	public void run() {
 		System.out.println(Calendar.getInstance().getTime());
+		playMusic();
 		System.out.println("Booming! ");
 	}
+	
+	public void playMusic(){
+		try{
+			AudioInputStream ais = AudioSystem.getAudioInputStream(new File("董贞 - 两两相忘.mp3"));
+		    AudioFormat aif = ais.getFormat();
+		    SourceDataLine sdl = null;
+		    DataLine.Info info = new DataLine.Info(SourceDataLine.class, aif);
+		    sdl = (SourceDataLine) AudioSystem.getLine(info);
+		    sdl.open(aif);
+		    sdl.start();
+		    int nByte = 0;
+		    byte[] buffer = new byte[128];
+		    while (nByte != -1){
+			    nByte = ais.read(buffer, 0, 128);
+			    if (nByte >= 0){
+			     sdl.write(buffer, 0, nByte);
+			    }
+		    }
+		    sdl.stop();
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+		/*//URL mus=this.getClass().getResource("/music/Keepup.wav");
+		URL mus=null;
+		try {
+			mus = new File("/董贞 - 两两相忘.mp3").toURI().toURL();
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+		AudioClip snd =JApplet.newAudioClip(mus);
+		//snd.loop();
+		snd.play();*/
+	}
 }
-
