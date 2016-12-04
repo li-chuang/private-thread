@@ -49,9 +49,10 @@ class MyTimerTask extends TimerTask{
 		System.out.println("Booming! ");
 	}
 	
+	//Java本身只支持mid格式的音频，用JMF可以播放其他格式的音频文件
 	public void playMusic(){
 		try{
-			AudioInputStream ais = AudioSystem.getAudioInputStream(new File("董贞 - 两两相忘.mp3"));
+			AudioInputStream ais = AudioSystem.getAudioInputStream(new File("music/255.mid"));
 		    AudioFormat aif = ais.getFormat();
 		    SourceDataLine sdl = null;
 		    DataLine.Info info = new DataLine.Info(SourceDataLine.class, aif);
