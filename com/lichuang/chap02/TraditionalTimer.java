@@ -32,7 +32,9 @@ public class TraditionalTimer {
 		
 		//executeDelay(new MyTimerTask(),5000);
 		
-		executePeriod(new MyTimerTask(),1000);
+		//executePeriod(new MyTimerTask(),1000);
+		
+		executeDelayPeriod(new MyTimerTask(),5000,1000);
 	}
 
 	//在预定的时间点执行任务，以后可以有定时发邮件，定时保存数据库数据等。作用很广
@@ -45,8 +47,14 @@ public class TraditionalTimer {
 		new Timer().schedule(task, delay);
 	}
 	
+	// 按一定的时间间隔执行任务
 	public static void executePeriod(TimerTask task,long period){
 		new Timer().schedule(task, Calendar.getInstance().getTime(), period);
+	}
+	
+	// 推迟指定的时间后，按一定的间隔执行任务
+	public static void executeDelayPeriod(TimerTask task,long delay,long period){
+		new Timer().schedule(task, delay, period);
 	}
 	
 }
