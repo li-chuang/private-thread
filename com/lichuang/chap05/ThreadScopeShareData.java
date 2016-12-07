@@ -14,6 +14,8 @@ public class ThreadScopeShareData {
 
 	private static int data = 0;
 	
+	// 此处的map是关键，此Map以Thread为key,剩下的数据在value中
+	// ThreadLocal也无非是前面的key省略掉了，直接可以set和get数据，其实原理一样
 	private static Map<Thread,Integer> threadData = new HashMap<Thread,Integer>();
 	
 	public static void main(String[] args) {
