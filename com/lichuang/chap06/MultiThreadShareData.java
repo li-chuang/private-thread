@@ -25,7 +25,7 @@ class Product implements Runnable{
 	public void run() {
 		try {
 			shareData.increase();
-			//System.out.println("Product : "+shareData.getNumber());
+			Thread.sleep(1000);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -42,7 +42,7 @@ class Comsumer implements Runnable{
 	public void run() {
 		try {
 			shareData.descrease();
-			//System.out.println("Comsumer : "+shareData.getNumber());
+			Thread.sleep(1000);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -58,7 +58,7 @@ class ShareData{
 	
 	public synchronized void increase() throws Exception{
 		if(number > 10){
-			Thread.sleep(5000);
+			//Thread.sleep(5000);
 			System.out.println("number数量大于10，休息一会儿！");
 		}else{
 			number++;
@@ -67,7 +67,7 @@ class ShareData{
 	}
 	public synchronized void descrease() throws Exception{
 		if(number < 1){
-			Thread.sleep(5000);
+			//Thread.sleep(5000);
 			System.out.println("number数量小于1，休息一会儿！");
 		}else {
 			number--;
