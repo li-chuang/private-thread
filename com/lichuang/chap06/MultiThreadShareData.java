@@ -8,7 +8,7 @@ package com.lichuang.chap06;
 public class MultiThreadShareData {
 
 	public static void main(String[] args) {
-		ShareData shareData = new ShareData();
+		ShareData shareData = new ShareData(5);
 		new Thread(new Product(shareData)).start();
 		new Thread(new Comsumer(shareData)).start();
 	}
@@ -25,7 +25,7 @@ class Product implements Runnable{
 	public void run() {
 		try {
 			shareData.increase();
-			System.out.println("Product : "+shareData.getNumber());
+			//System.out.println("Product : "+shareData.getNumber());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -42,7 +42,7 @@ class Comsumer implements Runnable{
 	public void run() {
 		try {
 			shareData.descrease();
-			System.out.println("Comsumer : "+shareData.getNumber());
+			//System.out.println("Comsumer : "+shareData.getNumber());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -52,18 +52,26 @@ class Comsumer implements Runnable{
 class ShareData{
 	private int number= 0;
 	
+	public ShareData(int number){
+		this.number = number;
+	}
+	
 	public synchronized void increase() throws Exception{
 		if(number > 10){
 			Thread.sleep(5000);
+			System.out.println("number数量大于10，休息一会儿！");
 		}else{
 			number++;
+			System.out.println("number++"+ ", number = "+number);
 		}
 	}
 	public synchronized void descrease() throws Exception{
 		if(number < 1){
 			Thread.sleep(5000);
+			System.out.println("number数量小于1，休息一会儿！");
 		}else {
 			number--;
+			System.out.println("number--"+ ", number = "+number);
 		}
 	}
 	public int getNumber() {
