@@ -11,6 +11,7 @@ public class MultiThreadShareData {
 		ShareData shareData = new ShareData(5);
 		new Thread(new Product(shareData)).start();
 		new Thread(new Comsumer(shareData)).start();
+		new Thread(new Comsumer(shareData)).start();
 	}
 	
 }
@@ -24,8 +25,10 @@ class Product implements Runnable{
 	@Override
 	public void run() {
 		try {
-			shareData.increase();
-			Thread.sleep(1000);
+			while(true){
+				shareData.increase();
+				Thread.sleep(1000);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -41,8 +44,10 @@ class Comsumer implements Runnable{
 	@Override
 	public void run() {
 		try {
-			shareData.descrease();
-			Thread.sleep(1000);
+			while(true){
+				shareData.descrease();
+				Thread.sleep(1000);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -58,8 +63,8 @@ class ShareData{
 	
 	public synchronized void increase() throws Exception{
 		if(number > 10){
-			//Thread.sleep(5000);
 			System.out.println("number数量大于10，休息一会儿！");
+			Thread.sleep(5000);
 		}else{
 			number++;
 			System.out.println("number++"+ ", number = "+number);
@@ -67,8 +72,8 @@ class ShareData{
 	}
 	public synchronized void descrease() throws Exception{
 		if(number < 1){
-			//Thread.sleep(5000);
 			System.out.println("number数量小于1，休息一会儿！");
+			Thread.sleep(5000);
 		}else {
 			number--;
 			System.out.println("number--"+ ", number = "+number);
