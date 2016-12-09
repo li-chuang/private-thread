@@ -63,20 +63,20 @@ class ShareData{
 	
 	public synchronized void increase() throws Exception{
 		if(number > 10){
-			System.out.println("number数量大于10，休息一会儿！");
+			System.out.println("Thread Name : "+Thread.currentThread().getName()+", number数量大于10，休息一会儿！");
 			Thread.sleep(5000);
 		}else{
 			number++;
-			System.out.println("number++"+ ", number = "+number);
+			System.out.println("Thread Name : "+Thread.currentThread().getName()+", number++"+ ", number = "+number);
 		}
 	}
 	public synchronized void descrease() throws Exception{
 		if(number < 1){
-			System.out.println("number数量小于1，休息一会儿！");
+			System.out.println("Thread Name : "+Thread.currentThread().getName()+", number数量小于1，休息一会儿！");
 			Thread.sleep(5000);
 		}else {
 			number--;
-			System.out.println("number--"+ ", number = "+number);
+			System.out.println("Thread Name : "+Thread.currentThread().getName()+", number--"+ ", number = "+number);
 		}
 	}
 	public int getNumber() {
