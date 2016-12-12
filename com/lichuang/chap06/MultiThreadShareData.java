@@ -85,4 +85,5 @@ class ShareData{
 	public void setNumber(int number) {
 		this.number = number;
 	}
+	
 }
