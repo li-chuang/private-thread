@@ -27,7 +27,7 @@ class Product implements Runnable{
 		try {
 			while(true){
 				shareData.increase();
-				Thread.sleep(1000);
+				//Thread.sleep(1000);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -46,7 +46,7 @@ class Comsumer implements Runnable{
 		try {
 			while(true){
 				shareData.descrease();
-				Thread.sleep(1000);
+				//Thread.sleep(1000);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -67,6 +67,7 @@ class ShareData{
 			Thread.sleep(5000);
 		}else{
 			number++;
+			Thread.sleep(1000);
 			System.out.println("Thread Name : "+Thread.currentThread().getName()+", number++"+ ", number = "+number);
 		}
 	}
@@ -76,6 +77,7 @@ class ShareData{
 			Thread.sleep(5000);
 		}else {
 			number--;
+			Thread.sleep(1000);
 			System.out.println("Thread Name : "+Thread.currentThread().getName()+", number--"+ ", number = "+number);
 		}
 	}
