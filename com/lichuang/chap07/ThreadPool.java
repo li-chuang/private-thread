@@ -6,7 +6,24 @@ import java.util.concurrent.Executors;
 public class ThreadPool {
 	
 	public static void main(String[] args) {
-		
+		ExecutorService threadPool = getFixedExecutorService();
+		for(int i = 0;i<10;i++){
+			final int task = i;
+			threadPool.execute(new Runnable() {			
+				@Override
+				public void run() {
+					for(int j=0;j<10;j++){
+						try {
+							Thread.sleep(1000);
+							System.out.println(Thread.currentThread()+", task = "+(task+1)+" , j = "+(j+1));
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			});
+			
+		}
 	}
 	
 	// 固定大小线程池
