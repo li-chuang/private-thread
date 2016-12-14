@@ -8,8 +8,12 @@ public class ThreadPool {
 	public static void main(String[] args) {
 		// 开了10个任务，但使用的线程只有3个
 		// ExecutorService threadPool = getFixedExecutorService();
+		
 		// 开了10个任务，使用10个线程，但线程使用后没有销毁，等待下次的使用
-		ExecutorService threadPool = getCachedExecutorService();
+		//ExecutorService threadPool = getCachedExecutorService();
+		
+		// 名义上开了10个任务，但活动的线程只有一个，每次去线程池都取的同一个线程
+		ExecutorService threadPool = getSingleExecutorService();
 		for(int i = 0;i<10;i++){
 			final int task = i;
 			threadPool.execute(new Runnable() {			
