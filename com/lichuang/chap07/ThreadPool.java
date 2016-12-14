@@ -6,7 +6,10 @@ import java.util.concurrent.Executors;
 public class ThreadPool {
 	
 	public static void main(String[] args) {
-		ExecutorService threadPool = getFixedExecutorService();
+		// 开了10个任务，但使用的线程只有3个
+		// ExecutorService threadPool = getFixedExecutorService();
+		// 开了10个任务，使用10个线程，但线程使用后没有销毁，等待下次的使用
+		ExecutorService threadPool = getCachedExecutorService();
 		for(int i = 0;i<10;i++){
 			final int task = i;
 			threadPool.execute(new Runnable() {			
