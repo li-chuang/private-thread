@@ -31,6 +31,7 @@ public class ThreadPool {
 			});
 			
 		}
+		shutDownThreadPool(threadPool);
 	}
 	
 	// 固定大小线程池
@@ -54,4 +55,5 @@ public class ThreadPool {
 	public static void shutDownThreadPool(ExecutorService threadPool){
 		threadPool.shutdownNow();
 	}
+
 }
