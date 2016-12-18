@@ -22,7 +22,9 @@ public class ThreadPool {
 //		executeMethod(threadPool);
 //		shutDownThreadPool(threadPool);
 		
-		getSchedueAtFixedRate();
+		//getSchedueAtFixedRate();
+		
+		getScheduleWithFixedDelay();
 	}
 
 	private static void executeMethod(ExecutorService threadPool) {
@@ -74,8 +76,20 @@ public class ThreadPool {
 		}, 10, 5, TimeUnit.SECONDS);
 	}
 	
+	//
+	public static void getScheduleWithFixedDelay(){
+		Executors.newScheduledThreadPool(3).scheduleWithFixedDelay(new Runnable() {
+			@Override
+			public void run() {
+				System.out.println("Booming!!");
+			}
+		}, 10, 5, TimeUnit.SECONDS);
+	}
+	
 	public static void shutDownThreadPool(ExecutorService threadPool){
 		threadPool.shutdownNow();
 	}
+
+}
 
 }
