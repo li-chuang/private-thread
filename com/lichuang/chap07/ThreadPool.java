@@ -64,6 +64,7 @@ public class ThreadPool {
 	}
 	
 	//线程池启动定时器
+	//支持间隔重复任务的定时方式，但不支持绝对定时任务，需要转换为相对时间方式
 	public static void getSchedueAtFixedRate(){
 		Executors.newScheduledThreadPool(3).scheduleAtFixedRate(new Runnable() {			
 			@Override
