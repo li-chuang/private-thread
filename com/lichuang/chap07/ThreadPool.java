@@ -2,7 +2,12 @@ package com.lichuang.chap07;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
+/**
+ * 线程池技术，和数据库连接池类似
+ *
+ */
 public class ThreadPool {
 	
 	public static void main(String[] args) {
@@ -13,7 +18,14 @@ public class ThreadPool {
 		//ExecutorService threadPool = getCachedExecutorService();
 		
 		// 名义上开了10个任务，但活动的线程只有一个，每次去线程池都取的同一个线程
-		ExecutorService threadPool = getSingleExecutorService();
+//		ExecutorService threadPool = getSingleExecutorService();
+//		executeMethod(threadPool);
+//		shutDownThreadPool(threadPool);
+		
+		getSchedueAtFixedRate();
+	}
+
+	private static void executeMethod(ExecutorService threadPool) {
 		for(int i = 0;i<10;i++){
 			final int task = i;
 			threadPool.execute(new Runnable() {			
@@ -31,7 +43,6 @@ public class ThreadPool {
 			});
 			
 		}
-		shutDownThreadPool(threadPool);
 	}
 	
 	// 固定大小线程池
@@ -50,6 +61,16 @@ public class ThreadPool {
 	public static ExecutorService getSingleExecutorService(){
 		ExecutorService threadPool = Executors.newSingleThreadExecutor();
 		return threadPool;
+	}
+	
+	//线程池启动定时器
+	public static void getSchedueAtFixedRate(){
+		Executors.newScheduledThreadPool(3).scheduleAtFixedRate(new Runnable() {			
+			@Override
+			public void run() {
+				System.out.println("Boobing!!!");
+			}
+		}, 10, 5, TimeUnit.SECONDS);
 	}
 	
 	public static void shutDownThreadPool(ExecutorService threadPool){
