@@ -41,6 +41,8 @@ class Business{
 		lock.lock();
 		try {
 			number++;
+			System.out.println(Thread.currentThread()+" , number = "+ number+" , "+System.currentTimeMillis());
+			Thread.sleep(50);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally{
@@ -52,6 +54,8 @@ class Business{
 		lock.lock();
 		try {
 			number--;
+			System.out.println(Thread.currentThread()+" , number = "+ number+" , "+System.currentTimeMillis());
+			Thread.sleep(50);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally{
