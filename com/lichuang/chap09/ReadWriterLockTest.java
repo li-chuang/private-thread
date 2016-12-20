@@ -1,5 +1,6 @@
 package com.lichuang.chap09;
 
+import java.util.Random;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -13,7 +14,28 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 public class ReadWriterLockTest {
 	
 	public static void main(String[] args) {
-		
+		final Queue queue = new Queue();
+		for(int i= 0;i<10 ; i++){
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					while(true){
+						Object obj = queue.get();
+						System.out.println(Thread.currentThread()+" , obj = "+obj);
+					}
+				}
+			}).start();
+			new Thread(new Runnable() {		
+				@Override
+				public void run() {
+					while(true){
+						int data = new Random().nextInt(100);
+						queue.put(data);
+						System.out.println(Thread.currentThread()+" , put data to Queue. data = "+data);
+					}
+				}
+			}).start();
+		}
 	}
 
 }
@@ -26,7 +48,6 @@ class Queue{
 		rwl.readLock().lock();
 		try {
 			Thread.sleep((long)Math.random()*1000);
-			//return data;
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}finally{
