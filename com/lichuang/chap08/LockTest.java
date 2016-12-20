@@ -15,6 +15,7 @@ public class LockTest {
 			public void run() {
 				while(true){
 					business.increse();
+					//Thread.sleep(50);
 				}
 			}
 		}).start();
@@ -23,6 +24,7 @@ public class LockTest {
 			public void run() {
 				while(true){
 					business.descrese();
+					//Thread.sleep(50);
 				}
 			}
 		}).start();
