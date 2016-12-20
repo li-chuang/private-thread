@@ -3,7 +3,6 @@ package com.lichuang.chap08;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-
 //线程锁Lock，与synchronized相比更加面向对象
 //作用实际上与synchronized类似
 public class LockTest {
