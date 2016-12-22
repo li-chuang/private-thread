@@ -7,6 +7,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * 读写锁
+ * 读写锁比单纯的Lock锁更进一步，比Lock控制更精细，区分了不同的隔离级别
  * 原则：线程中不存放线程控制逻辑，控制逻辑都放在资源文件中
  * 
  *
