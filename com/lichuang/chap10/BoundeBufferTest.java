@@ -12,6 +12,27 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class BoundeBufferTest {
 
+	public static void main(String[] args) {
+		final BoundeBuffer bounde = new BoundeBuffer();
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				while(true){
+					bounde.put("Hello World!!");
+				}
+			}
+		}).start();
+		
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				while(true){
+					Object obj = bounde.take();
+					System.out.println(obj);
+				}
+			}
+		}).start();
+	}
 }
 
 /**
