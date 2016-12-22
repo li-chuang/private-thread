@@ -14,6 +14,12 @@ public class BoundeBufferTest {
 
 }
 
+/**
+ * 下面的模型类似一个寻呼机。
+ * 有一个items构成的堆栈作为信息呼入池，
+ * 信息可以进入池中，信息也可以从池中呼出
+ *
+ */
 class BoundeBuffer{
 	final Lock lock = new ReentrantLock();
 	final Condition notFull = lock.newCondition();
@@ -32,7 +38,7 @@ class BoundeBuffer{
 				putptr = 0;
 			}
 			++count;
-			notEmpty.signal();
+			notEmpty.signal();//不为空条件唤醒
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally{
@@ -45,14 +51,14 @@ class BoundeBuffer{
 		Object x = null;
 		try {
 			while(count == 0){
-				notEmpty.await();
+				notEmpty.await();//不为空条件等待
 			}
 			x = items[takeptr];
 			if(++takeptr == items.length){
 				takeptr = 0;
 			}
 			--count;
-			notFull.signal();
+			notFull.signal();//不为满条件唤醒
 			//return x;
 		} catch (Exception e) {
 			e.printStackTrace();
