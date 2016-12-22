@@ -39,6 +39,28 @@ class BoundeBuffer{
 			lock.unlock();
 		}
 	}
+	
+	public Object take(){
+		lock.lock();
+		Object x = null;
+		try {
+			while(count == 0){
+				notEmpty.await();
+			}
+			x = items[takeptr];
+			if(++takeptr == items.length){
+				takeptr = 0;
+			}
+			--count;
+			notFull.signal();
+			//return x;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			lock.unlock();
+		}
+		return x;
+	}
 }
 
 
