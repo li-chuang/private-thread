@@ -7,6 +7,8 @@ import java.util.concurrent.Semaphore;
 
 /**
  * 信号灯
+ * 线程有10个，但是同时可用的只有3个，即拿到了信号灯，此线程才是可用的
+ * 其他的线程只能等待信号灯。
  *
  */
 public class SemaphoreTest {
@@ -22,8 +24,9 @@ public class SemaphoreTest {
 				public void run() {
 					try {
 						sp.acquire();
-						//System.out.println("已经进入第"+(i+1)+"个并发！");
+						System.out.println("---------A--------");
 						business.getCount();
+						System.out.println("---------B--------");
 						sp.release();
 					} catch (InterruptedException e) {
 						e.printStackTrace();
@@ -53,6 +56,6 @@ class Business{
 	
 	public void getCount(){
 		increase();
-		System.out.println("已经进入第"+count+"个并发！");
+		System.out.println(Thread.currentThread()+",已经进入第"+count+"个并发！");
 	}
 }
