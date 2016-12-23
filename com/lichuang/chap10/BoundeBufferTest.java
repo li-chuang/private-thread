@@ -1,94 +1,58 @@
-package com.lichuang.chap10;
+package com.lichuang.chap11;
 
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Semaphore;
+
 
 /**
- * 执行条件condition
- * 类似于wait/notify的作用，用于线程通信
- * 只不过wait/notify只能实现一路的等待/唤醒，condition可以实现多路
+ * 信号灯
  *
  */
-public class BoundeBufferTest {
+public class SemaphoreTest {
 
 	public static void main(String[] args) {
-		final BoundeBuffer bounde = new BoundeBuffer();
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				while(true){
-					bounde.put("Hello World!!");
-				}
-			}
-		}).start();
+		ExecutorService service = Executors.newCachedThreadPool();
+		final Semaphore sp = new Semaphore(3);
+		final Business business = new Business(0);
 		
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				while(true){
-					Object obj = bounde.take();
-					System.out.println(obj);
+		for(int i=0;i<10;i++){
+			Runnable runnable = new Runnable() {
+				@Override
+				public void run() {
+					try {
+						sp.acquire();
+						//System.out.println("已经进入第"+(i+1)+"个并发！");
+						business.getCount();
+						sp.release();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 				}
-			}
-		}).start();
+			};
+			service.execute(runnable);
+		}
+		
 	}
 }
 
-/**
- * 下面的模型类似一个寻呼机。
- * 有一个items构成的堆栈作为信息呼入池，
- * 信息可以进入池中，信息也可以从池中呼出
- *
- */
-class BoundeBuffer{
-	final Lock lock = new ReentrantLock();
-	final Condition notFull = lock.newCondition();
-	final Condition notEmpty = lock.newCondition();
-	final Object[] items = new Object[100];
-	int putptr,takeptr,count;
-	
-	public void put(Object x){
-		lock.lock();
-		try {
-			while(count == items.length){
-				notFull.await();// 不为满条件进入等待状态
-			}
-			items[putptr] = x;
-			if(++putptr == items.length){
-				putptr = 0;
-			}
-			++count;
-			notEmpty.signal();//不为空条件唤醒
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally{
-			lock.unlock();
-		}
+class Business{
+	private int count=0;
+	public Business(){
+		
+	}
+	public Business(int count){
+		this.count = count;
+	}
+	public void increase(){
+		count++;
+	}
+	public void descrease(){
+		count--;
 	}
 	
-	public Object take(){
-		lock.lock();
-		Object x = null;
-		try {
-			while(count == 0){
-				notEmpty.await();//不为空条件等待
-			}
-			x = items[takeptr];
-			if(++takeptr == items.length){
-				takeptr = 0;
-			}
-			--count;
-			notFull.signal();//不为满条件唤醒
-			//return x;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally{
-			lock.unlock();
-		}
-		return x;
+	public void getCount(){
+		increase();
+		System.out.println("已经进入第"+count+"个并发！");
 	}
-	
 }
-
-
