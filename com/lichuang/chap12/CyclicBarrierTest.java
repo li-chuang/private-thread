@@ -44,9 +44,8 @@ public class CyclicBarrierTest {
 
 class Business {
 	private int count = 0;
-
+	
 	public Business() {
-
 	}
 
 	public Business(int count) {
