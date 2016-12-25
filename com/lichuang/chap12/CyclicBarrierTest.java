@@ -8,6 +8,7 @@ import java.util.concurrent.Executors;
 
 /**
  * 集合点，集齐预设的数量后再运行
+ * 作用类似于集齐7颗龙珠召唤神龙。。
  *
  */
 public class CyclicBarrierTest {
@@ -44,8 +45,9 @@ public class CyclicBarrierTest {
 
 class Business {
 	private int count = 0;
-	
+
 	public Business() {
+
 	}
 
 	public Business(int count) {
